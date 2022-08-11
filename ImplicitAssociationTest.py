@@ -1,9 +1,11 @@
 from psychopy import visual,core,event
 import random as r
+import csv
 
 imgArr = ["bface1.jpg", "wface1.jpg", "bface2.jpg", "wface2.jpg", "bface3.jpg", "wface3.jpg"]
 wordArr = ["happy", "agony", "poison", "bliss", "love", "hate"]
 data = [] #defines data as an empty list, to store values
+
 
 win = visual.Window(size=(600,600))
 IntroText = visual.TextStim(win, 'You will see black faces and white faces. Press the z key if you see black and m key if you see white. You will also see positive and negative words. Press the z key if you see positive words, and the m key if you see negative words', color=(0, 1, 0), colorSpace='rgb')
@@ -34,7 +36,8 @@ for i in range(6):
         adjective = 'White'
     elif k[0] == "q":
         core.quit()
-    data.append([imgArr[i], str(round(rt, 4)), keyPressed, adjective])
+    #data.append([imgArr[i], str(round(rt, 4)), keyPressed, adjective])
+    data += [str(round(rt, 4)), adjective]
     win.flip()  # used to clear the window from the image... I think
 
     core.wait(1)
@@ -52,7 +55,8 @@ for i in range(6):
         adjective = 'Bad'
     elif k[0] == "q":
         core.quit()
-    data.append([wordArr[i], str(round(rt, 4)), keyPressed, adjective])
+    #data.append([wordArr[i], str(round(rt, 4)), keyPressed, adjective])
+    data += [str(round(rt, 4)), adjective]
     win.flip()
 
 #TransitionToTest2
@@ -85,7 +89,8 @@ for i in range(6):
         adjective = 'White'
     elif k[0] == "q":
         core.quit()
-    data.append([imgArr[i], str(round(rt, 4)), keyPressed, adjective])
+    #data.append([imgArr[i], str(round(rt, 4)), keyPressed, adjective])
+    data += [str(round(rt, 4)), adjective]
     win.flip()  # used to clear the window from the image... I think
 
     core.wait(1)
@@ -103,14 +108,14 @@ for i in range(6):
         adjective = 'Good'
     elif k[0] == "q":
         core.quit()
-    data.append([wordArr[i], str(round(rt, 4)), keyPressed, adjective])
+    #data.append([wordArr[i], str(round(rt, 4)), keyPressed, adjective])
+    data += [str(round(rt, 4)), adjective]
     win.flip()
 
-#Test Print Data
-
-for x in data:
-    print(x)
-
 #ExportToCSV
+
+with open('results.csv', 'a+', encoding='UTF8', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(data)
 
 core.quit()
